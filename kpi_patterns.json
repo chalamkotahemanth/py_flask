@@ -1,0 +1,5 @@
+{
+    "Achievement Rate": "Achievement\\s*Rate[:\\s]*([\\d\\.]+%)",
+    "Revenue Target": "Revenue\\s*Target[:\\s]*₹?\\s*([\\d,]+)",
+    "Quality Score": "Quality\\s*Score[:\\s]*([\\d\\.]+%)"
+}
