@@ -25,6 +25,7 @@ KPI_FINDER = re.compile(r"""
 """, re.IGNORECASE | re.VERBOSE)
 
 # --- Helper to merge runs inside shapes ---
+
 def extract_runs_text(shape):
     text_parts = []
     if shape.has_text_frame:
@@ -89,3 +90,4 @@ def index():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
