@@ -25,7 +25,6 @@ KPI_FINDER = re.compile(r"""
 """, re.IGNORECASE | re.VERBOSE)
 
 # --- Helper to merge runs inside shapes ---
-
 def extract_runs_text(shape):
     text_parts = []
     if shape.has_text_frame:
@@ -79,15 +78,25 @@ def index():
 
         if all_data:
             final_df = pd.concat(all_data, ignore_index=True)
+
+            # 👉 Pivot: one row per Manager, KPI names as columns
+            pivot_df = final_df.pivot_table(
+                index="Manager/Sector",
+                columns="KPI",
+                values="Value",
+                aggfunc="first"
+            ).reset_index()
+
+            # Save to Excel
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             output_file = os.path.join(
-                UPLOAD_FOLDER, f"KPI_Results_{timestamp}.xlsx"
+                UPLOAD_FOLDER, f"KPI_Pivot_{timestamp}.xlsx"
             )
-            final_df.to_excel(output_file, index=False)
+            pivot_df.to_excel(output_file, index=False)
+
             return send_file(output_file, as_attachment=True)
 
     return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
